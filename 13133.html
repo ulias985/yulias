@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ulias的私房小网站</title>
+    <style>
+        /* 页面样式重置 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #007bff; /* 蓝色背景 */
+            height: 60px; /* 导航栏高度 */
+            width: 100%; /* 占据整个宽度 */
+            position: fixed; /* 固定在页面顶部 */
+            top: 0; /* 距离顶部为0 */
+            left: 0; /* 距离左侧为0 */
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            z-index: 1000; /* 确保导航栏在其他内容之上 */
+        }
+
+        /* 导航菜单样式 */
+        .nav-menu {
+            display: flex;
+            width: 50%; /* 总宽度不超过导航栏的1/2 */
+            justify-content: space-around; /* 平均分布 */
+        }
+
+        /* 菜单项样式 */
+        .nav-item {
+            color: white; /* 链接颜色为白色 */
+            text-decoration: none; /* 去掉下划线 */
+            padding: 10px 20px; /* 内边距 */
+            transition: background-color 0.3s; /* 背景颜色过渡效果 */
+        }
+
+        /* 鼠标悬停时的样式 */
+        .nav-item:hover {
+            background-color: #0056b3; /* 背景颜色加深 */
+        }
+
+        /* 头部元素样式 */
+        .header {
+            position: relative;
+            width: 65%; /* 设置宽度为网页的65% */
+            height: 400px; /* 高度 */
+            margin: 80px auto 20px; /* 上下留出距离，并水平居中，顶部留出导航栏高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-size: cover; /* 确保背景图片覆盖整个区域 */
+            background-position: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        /* 切换按钮样式 */
+        .switch-button {
+            position: absolute;
+            bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .switch-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .prev-button {
+            left: 20px;
+        }
+
+        .next-button {
+            right: 20px;
+        }
+
+        /* 内容区域样式 */
+        .content {
+            width: 81%; /* 设置内容区域宽度为网页的81% */
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 300px; /* 修改宽度为300px */
+            height: 300px; /* 新增高度为300px */
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* 图片样式 */
+        .card img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* 卡片内容样式 */
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* 新区域样式 */
+        .new-section {
+            width: 1300px;
+            height: 300px;
+            margin: 20px auto;
+            background-image: url('https://via.placeholder.com/1300x300');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            padding-left: 50px;
+            box-sizing: border-box;
+        }
+
+        .new-section-text {
+            color: white;
+            font-size: 1.5em;
+        }
+
+        /* 脚页样式 */
+        .footer {
+            width: 1300px;
+            height: 100px;
+            margin: 30px auto;
+            background-color: #D7719B;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="nav-menu">
+            <a href="#" class="nav-item">首页</a>
+            <a href="https://objectstorageapi.hzh.sealos.run/98aocipq-ulias/nextlevel/chat with AI.html" class="nav-item">chat with AI</a>
+            <a href="https://objectstorageapi.hzh.sealos.run/98aocipq-ulias/nextlevel/game.html" class="nav-item">game</a>
+            <a href="https://objectstorageapi.hzh.sealos.run/98aocipq-ulias/nextlevel/about me.html" class="nav-item">about me</a> <!-- 新增此处 -->
+            <a href="https://www.douyin.com/" class="nav-item">抖音</a>
+            <a href="https://www.ujs.edu.cn/" class="nav-item">江苏大学</a>
+        </div>
+    </div>
+
+    <!-- 头部元素 -->
+    <div class="header" id="header">
+        <!-- 切换按钮 -->
+        <button class="switch-button prev-button" onclick="prevImage()">上一张</button>
+        <button class="switch-button next-button" onclick="nextImage()">下一张</button>
+    </div>
+
+    <script>
+        // 背景图片数组
+        const images = [
+            'https://s1.aigei.com/src/img/gif/3d/3dbb70bf3c81407cb5aaba07c79b317b.gif?imageMogr2/auto-orient/thumbnail/!282x270r/gravity/Center/crop/282x270/quality/85/%7CimageView2/2/w/282&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:qYcsGJYVmgA7H9fxnPnzL-r10UE=',
+            'https://s1.aigei.com/src/img/gif/93/93fb824dfa514dfdbafe12a0fe84eddd.gif?imageMogr2/auto-orient/thumbnail/!282x253r/gravity/Center/crop/282x253/quality/85/%7CimageView2/2/w/282&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:DtqdFjfVChVmkmrlrzKjAKqrU6I=',
+            'https://s1.aigei.com/src/img/gif/fc/fc9ee60300bb4e23b750cf87a6199a36.gif?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:0JuUBPjWzGce17bMqRSsvGIoV6g='
+        ];
+
+        let currentIndex = 0;
+
+        // 初始化背景图片
+        const headerElement = document.getElementById('header');
+        headerElement.style.backgroundImage = `url(${images[currentIndex]})`;
+
+        // 切换到上一张图片
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            headerElement.style.backgroundImage = `url(${images[currentIndex]})`;
+        }
+
+        // 切换到下一张图片
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            headerElement.style.backgroundImage = `url(${images[currentIndex]})`;
+        }
+
+        // 自动切换图片
+        setInterval(nextImage, 5000); // 每5秒切换一次
+    </script>
+
+    <!-- 内容区域 -->
+    <div class="content">
+        <!-- 第一层卡片 -->
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片1">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题1</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片2">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题2</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片3">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题3</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+
+        <!-- 第二层卡片 -->
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片4">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题4</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片5">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题5</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x150" alt="图片6">
+            <div class="card-content">
+                <h3 class="card-title">卡片标题6</h3>
+                <p class="card-description">这是卡片的描述文字，介绍卡片的内容。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新区域 -->
+    <div class="new-section">
+        <div class="new-section-text">
+            <p>这是一个新的内容区域。</p>
+            <p>这里可以放置一些描述文字。</p>
+        </div>
+    </div>
+
+    <!-- 脚页 -->
+    <div class="footer">
+        版权所有 © 2023
+    </div>
+
+</body>
+</html>
+

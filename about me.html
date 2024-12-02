@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about me</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://p5.itc.cn/q_70/images03/20210522/7a81b5ac16eb4cc2b42ef9af2f20f8cf.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #add-text-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        #button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .action-button {
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #text-input {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: none;
+        }
+        #submit-button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .display-text {
+            width: 60vw;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        .display-text:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        /* 模态框样式 */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+        #modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 70vw;
+            height: 70vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+        #modal-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .modal-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-button.delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div id="add-text-container">
+        <div id="title">请输入文本</div>
+        <textarea id="text-input" placeholder="在此输入文本"></textarea>
+        <button id="submit-button" onclick="submitText()">提交</button>
+    </div>
+    <div id="button-container">
+        <button class="action-button" onclick="showTextInput()">+</button>
+        <button class="action-button" onclick="goBack()">←</button>
+    </div>
+    <div id="text-display-area"></div>
+
+    <!-- 模态框 -->
+    <div id="modal">
+        <div id="modal-content">
+            <pre id="modal-text"></pre>
+            <div id="modal-buttons">
+                <button class="modal-button" onclick="closeModal()">关闭</button>
+                <button class="modal-button delete" onclick="deleteText()">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTextElement = null;
+
+        // 加载本地存储中的文本
+        function loadTexts() {
+            const texts = JSON.parse(localStorage.getItem('texts')) || [];
+            const textDisplayArea = document.getElementById('text-display-area');
+            texts.forEach(text => {
+                const newTextElement = document.createElement('div');
+                newTextElement.className = 'display-text';
+                newTextElement.textContent = text;
+                newTextElement.onclick = () => showModal(newTextElement);
+                textDisplayArea.appendChild(newTextElement);
+            });
+        }
+
+        // 保存文本到本地存储
+        function saveTexts() {
+            const textDisplayArea = document.getElementById('text-display-area');
+            const texts = Array.from(textDisplayArea.children).map(child => child.textContent);
+            localStorage.setItem('texts', JSON.stringify(texts));
+        }
+
+        function showTextInput() {
+            document.getElementById('add-text-container').style.display = 'flex';
+        }
+
+        function submitText() {
+            const textInput = document.getElementById('text-input').value;
+            if (textInput.trim() !== '') {
+                const textDisplayArea = document.getElementById('text-display-area');
+                const newTextElement = document.createElement('div');
+                newTextElement.className = 'display-text';
+                newTextElement.textContent = textInput;
+                newTextElement.onclick = () => showModal(newTextElement);
+                textDisplayArea.appendChild(newTextElement);
+                document.getElementById('text-input').value = '';
+                document.getElementById('add-text-container').style.display = 'none';
+                saveTexts(); // 保存到本地存储
+            }
+        }
+
+        function showModal(textElement) {
+            currentTextElement = textElement;
+            document.getElementById('modal-text').textContent = textElement.textContent;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function deleteText() {
+            if (currentTextElement) {
+                currentTextElement.remove();
+                closeModal();
+                saveTexts(); // 更新本地存储
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'https://objectstorageapi.hzh.sealos.run/98aocipq-ulias/nextlevel/13133.html';
+        }
+
+        // 页面加载时加载文本
+        window.onload = loadTexts;
+    </script>
+</body>
+</html>

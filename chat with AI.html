@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-image: url('https://ts1.cn.mm.bing.net/th/id/R-C.f760291ac659418c3d85d34ee2911a70?rik=TGtK1%2bYPUIx3kA&riu=http%3a%2f%2fi.xsteach.cn%2fuploaded%2ff7%2f60%2f29%2ff760291ac659418c3d85d34ee2911a70003.gif&ehk=Ul2siKBALxLzTK%2f4prJ%2fQgcwW9Q1wOSHAkijFge8kDY%3d&risl=&pid=ImgRaw&r=0');
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-position: center; /* 背景图像居中 */
+        }
+        #input-container {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            justify-content: center; /* 水平居中 */
+        }
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            max-width: 600px; /* 最大宽度 */
+            width: 100%; /* 自适应宽度 */
+            margin-right: 10px; /* 右侧间距 */
+        }
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+        #chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px; /* 添加边距以便于居中 */
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d1e7dd;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #f8d7da;
+            align-self: flex-start;
+        }
+        #back-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="input-container">
+        <input type="text" id="user-input" placeholder="输入你的问题..." />
+        <button id="send-button" onclick="sendMessage()">发送</button>
+    </div>
+    <div id="chat-container"></div>
+
+    <button id="back-button" onclick="goBack()">返回</button>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            // 显示用户消息
+            displayMessage(message, 'user');
+
+            // 清空输入框
+            userInput.value = '';
+
+            try {
+                const response = await fetch('https://api.chatanywhere.tech/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer sk-il2f6HMWgcZUonS3RpmtEYlluUoxP9Vgj3EHS6J87Jqsr6w5' // 使用你的API密钥
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{ role: "user", content: message }],
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('网络响应错误');
+                }
+
+                const data = await response.json();
+                const botMessage = data.choices[0].message.content;
+
+                // 显示机器人消息
+                displayMessage(botMessage, 'bot');
+            } catch (error) {
+                console.error('Error:', error);
+                displayMessage('抱歉，出现了问题。请稍后再试。', 'bot');
+            }
+        }
+
+        function displayMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message -message`;
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight; // 滚动到底部
+        }
+
+        function goBack() {
+            window.location.href = 'https://objectstorageapi.hzh.sealos.run/98aocipq-ulias/nextlevel/13133.html';
+        }
+    </script>
+</body>
+</html>
